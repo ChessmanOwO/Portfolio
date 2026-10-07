@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nguyễn Hà Phong - Portfolio | Sinh Viên Kỹ Thuật Điện Tử Viễn Thông</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- AOS Animation Library CDN -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            ocean: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8', /* Xanh biển nhạt chủ đạo */
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+            }
+          },
+          animation: {
+            'blob': 'blob 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1)',
+            'float': 'float 4s ease-in-out infinite',
+            'float-slow': 'float 6s ease-in-out infinite 1.5s',
+            'pulse-subtle': 'pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '50%': { transform: 'translate(30px, -25px) scale(1.15)' },
+              '100%': { transform: 'translate(-25px, 20px) scale(0.9)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            pulseSubtle: {
+              '0%, 100%': { opacity: '0.4' },
+              '50%': { opacity: '0.8' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Theme Xanh biển nhạt nền tối trang nhã */
+    html {
+      scroll-padding-top: 5.5rem;
+      /* Fix cuộn nav bar không bị che mất tiêu đề */
+    }
+
+    body {
+      background-color: #070e17;
+      background-image:
+        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.16) 0px, transparent 45%),
+        radial-gradient(at 100% 30%, rgba(125, 211, 252, 0.12) 0px, transparent 45%),
+        radial-gradient(at 30% 90%, rgba(14, 165, 233, 0.1) 0px, transparent 50%);
+    }
+
+    .glass-card {
+      background: rgba(12, 23, 39, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(186, 230, 253, 0.1);
+      box-shadow: 0 4px 20px -2px rgba(2, 6, 23, 0.5);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .glass-card:hover {
+      border-color: rgba(56, 189, 248, 0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px -8px rgba(56, 189, 248, 0.2);
+    }
+
+    .tech-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: rgba(56, 189, 248, 0.06);
+      border: 1px solid rgba(186, 230, 253, 0.15);
+      color: #bae6fd;
+      transition: all 0.25s ease;
+    }
+
+    .tech-pill:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: rgba(56, 189, 248, 0.5);
+      color: #e0f2fe;
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .glow-border {
+      position: relative;
+    }
+
+    .glow-border::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.6), transparent 50%, rgba(125, 211, 252, 0.4));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    #scroll-progress {
+      height: 3px;
+      background: linear-gradient(to right, #38bdf8, #7dd3fc, #bae6fd);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      z-index: 9999;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+    }
+
+    .ocean-grid {
+      background-size: 3.5rem 3.5rem;
+      background-image:
+        linear-gradient(to right, rgba(186, 230, 253, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(186, 230, 253, 0.04) 1px, transparent 1px);
+    }
+
+
+    /* Ocean liquid-glass visual layer */
+    body {
+      background-color: #020617;
+      background-image:
+        radial-gradient(ellipse at 12% 8%, rgba(14, 165, 233, 0.16), transparent 38%),
+        radial-gradient(ellipse at 88% 30%, rgba(56, 189, 248, 0.10), transparent 34%),
+        radial-gradient(ellipse at 45% 95%, rgba(8, 47, 73, 0.36), transparent 52%),
+        linear-gradient(145deg, #020617 0%, #071a2e 52%, #071522 100%);
+      background-attachment: fixed;
+    }
+
+    .ocean-ambient {
+      isolation: isolate;
+      background: radial-gradient(ellipse at 50% 105%, rgba(14, 165, 233, 0.07), transparent 55%);
+    }
+
+
+    .ocean-ambient > .animate-blob:nth-child(1) { background-color: rgba(103, 232, 249, .12); }
+    .ocean-ambient > .animate-blob:nth-child(2) { background-color: rgba(56, 189, 248, .10); }
+    .ocean-ambient > .animate-blob:nth-child(3) { background-color: rgba(103, 232, 249, .07); }
+
+    .ocean-ambient::before {
+      content: '';
+      position: absolute;
+      inset: -15%;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at 20% 35%, rgba(103, 232, 249, 0.11), transparent 30%),
+        radial-gradient(ellipse at 78% 62%, rgba(56, 189, 248, 0.095), transparent 32%);
+      animation: ocean-breathe 18s ease-in-out infinite alternate;
+      will-change: transform, opacity;
+    }
+
+    @keyframes ocean-breathe {
+      from { transform: translate3d(-1%, 0, 0) scale(1); opacity: .55; }
+      to { transform: translate3d(1%, -1%, 0) scale(1.04); opacity: .9; }
+    }
+
+    .cursor-glow {
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: .16;
+      transform: translate3d(var(--cursor-x, -400px), var(--cursor-y, -400px), 0) translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(56,189,248,.25) 0%, rgba(14,165,233,.09) 32%, transparent 72%);
+      filter: blur(14px);
+      will-change: transform;
+    }
+
+    #hero {
+      position: relative;
+      isolation: isolate;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset: -5rem 0;
+      pointer-events: none;
+      opacity: .65;
+      background: radial-gradient(ellipse at var(--hero-light-x, 48%) var(--hero-light-y, 48%), rgba(56,189,248,.13), transparent 46%);
+      transition: opacity .5s ease;
+    }
+
+    #hero h1 {
+      padding-top: .08em;
+      line-height: 1.35;
+      color: #f8fdff;
+      text-shadow: 0 0 16px rgba(56,189,248,.16);
+      animation: hero-title-glow 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes hero-title-glow {
+      from { text-shadow: 0 0 14px rgba(56,189,248,.12), 0 0 28px rgba(56,189,248,.04); }
+      to { text-shadow: 0 0 20px rgba(103,232,249,.3), 0 0 42px rgba(56,189,248,.12); }
+    }
+
+    .liquid-cta {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .liquid-cta > * { position: relative; z-index: 1; }
+
+    .liquid-cta::after {
+      content: '';
+      position: absolute;
+      z-index: 0;
+      top: -70%;
+      bottom: -70%;
+      left: -45%;
+      width: 28%;
+      pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.36), rgba(103,232,249,.16), transparent);
+      transform: translateX(-180%) rotate(18deg);
+      transition: transform .9s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .liquid-cta:hover::after { transform: translateX(620%) rotate(18deg); }
+
+    .glass-card {
+      isolation: isolate;
+      background-image: linear-gradient(135deg, rgba(255,255,255,.045), rgba(255,255,255,.008) 42%, rgba(56,189,248,.025));
+      transition: transform .38s cubic-bezier(.2,.75,.25,1), border-color .35s ease, box-shadow .38s ease, background-color .35s ease;
+      transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+      transform-style: preserve-3d;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(340px circle at var(--glass-x, 50%) var(--glass-y, 50%), rgba(186,230,253,.13), transparent 58%);
+      mix-blend-mode: screen;
+      transition: opacity .35s ease;
+    }
+
+    .glass-card:hover::before { opacity: 1; }
+
+    .glass-card:hover:not(header) {
+      border-color: rgba(125, 211, 252, 0.4);
+      transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-3px) scale(1.012);
+      box-shadow: 0 18px 44px -20px rgba(56, 189, 248, 0.34), inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    header.glass-card {
+      background-color: rgba(4, 14, 27, .72);
+      background-image: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.008));
+      border-bottom-color: rgba(186,230,253,.13);
+      transition: background-color .35s ease, box-shadow .35s ease, border-color .35s ease;
+    }
+
+    header.glass-card.is-scrolled {
+      background-color: rgba(2, 10, 22, .88);
+      box-shadow: 0 10px 30px rgba(2, 6, 23, .32);
+      border-bottom-color: rgba(125,211,252,.2);
+    }
+
+    header nav {
+      gap: .55rem;
+      flex-shrink: 0;
+    }
+
+    nav a {
+      position: relative;
+      padding: .25rem .32rem;
+      white-space: nowrap;
+      border-radius: 999px;
+      transition: color .25s ease, background-color .25s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 25%;
+      right: 25%;
+      bottom: .18rem;
+      height: 1px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, #67e8f9, transparent);
+      transform: scaleX(0);
+      opacity: 0;
+      transition: transform .28s ease, opacity .28s ease;
+    }
+
+    nav a:hover, nav a.nav-active {
+      color: #bae6fd;
+      background-color: rgba(56,189,248,.08);
+    }
+
+    nav a.nav-active::after {
+      transform: scaleX(1);
+      opacity: .85;
+    }
+
+    [data-aos] {
+      filter: blur(5px);
+      transition-property: opacity, transform, filter;
+      transition-duration: .75s;
+      transition-timing-function: cubic-bezier(.2,.75,.25,1);
+    }
+
+    [data-aos].aos-animate { filter: blur(0); }
+
+    .water-ripple-host {
+      position: relative !important;
+      overflow: hidden !important;
+      isolation: isolate;
+    }
+
+    .water-ripple-host > :not(.water-ripple) { position: relative; z-index: 1; }
+
+    .water-ripple {
+      position: absolute;
+      z-index: 0;
+      width: 16px;
+      height: 16px;
+      left: var(--ripple-x);
+      top: var(--ripple-y);
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(255,255,255,.35), rgba(103,232,249,.17) 35%, transparent 72%);
+      transform: translate(-50%, -50%) scale(0);
+      animation: water-ripple .65s ease-out forwards;
+    }
+
+    @keyframes water-ripple {
+      to { transform: translate(-50%, -50%) scale(16); opacity: 0; }
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .cursor-glow { width: 200px; height: 200px; opacity: .1; }
+    }
+
+    @media (max-width: 767px) {
+      body { background-attachment: scroll; }
+      .cursor-glow { display: none; }
+      .glass-card { backdrop-filter: blur(11px); -webkit-backdrop-filter: blur(11px); }
+      .animate-blob { animation-duration: 24s !important; }
+      .animate-float, .animate-float-slow { animation-duration: 6s !important; }
+      [data-aos] { filter: blur(2px); transition-duration: .45s !important; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+      .cursor-glow { display: none !important; }
+      #hero h1 { animation: none !important; color: #fff; text-shadow: none; background: none; }
+      #hero::before { opacity: .28; }
+      [data-aos] { filter: none !important; }
+    }
+
+  </style>
+</head>
+
+<body
+  class="text-slate-200 font-sans selection:bg-ocean-400 selection:text-slate-950 antialiased min-h-screen relative overflow-x-hidden">
+
+  <!-- Scroll Progress Indicator -->
+  <div id="scroll-progress"></div>
+
+  <!-- Ambient Light Blobs -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden ocean-ambient">
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-ocean-400/15 rounded-full blur-3xl animate-blob"></div>
+    <div class="absolute top-1/3 -right-32 w-[30rem] h-[30rem] bg-ocean-300/10 rounded-full blur-3xl animate-blob"
+      style="animation-delay: 3s;"></div>
+    <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-ocean-500/10 rounded-full blur-3xl animate-blob"
+      style="animation-delay: 6s;"></div>
+    <div class="absolute inset-0 ocean-grid"></div>
+  </div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <!-- Header / Navigation -->
+  <header
+    class="fixed top-0 left-0 right-0 z-50 glass-card !rounded-none !border-x-0 !border-t-0 border-b border-ocean-200/10 backdrop-blur-md">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-3 group">
+        <div
+          class="w-9 h-9 rounded-xl bg-gradient-to-tr from-ocean-400 to-ocean-200 text-slate-950 flex items-center justify-center font-extrabold text-sm shadow-lg shadow-ocean-400/25 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+          P
+        </div>
+        <div>
+          <span
+            class="font-bold text-slate-100 text-sm sm:text-base group-hover:text-ocean-300 transition-colors">NGUYỄN HÀ
+            PHONG</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-6 text-sm text-slate-300 font-medium">
+        <a href="#about" class="hover:text-ocean-300 transition-colors">Giới thiệu</a>
+        <a href="#skills" class="hover:text-ocean-300 transition-colors">Kỹ năng</a>
+        <a href="#projects" class="hover:text-ocean-300 transition-colors">Dự án & NCKH</a>
+<a href="#experience" class="hover:text-ocean-300 transition-colors">Kinh nghiệm</a>
+        <a href="#education" class="hover:text-ocean-300 transition-colors">Học vấn</a>
+        <a href="#contact" class="hover:text-ocean-300 transition-colors">Liên hệ</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="flex items-center gap-3">
+        <a href="assets/Nguyen_Ha_Phong_CV.pdf" download="Nguyen_Ha_Phong_CV.pdf"
+          class="liquid-cta inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-gradient-to-r from-ocean-400 to-ocean-300 hover:from-ocean-300 hover:to-ocean-200 text-slate-950 shadow-md shadow-ocean-400/25 hover:shadow-ocean-400/40 hover:scale-105 transition-all duration-300">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Tải CV PDF</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-28 pb-16 space-y-24 relative z-10">
+
+    <!-- Hero Section -->
+    <section id="hero" class="pt-6 pb-4">
+      <div class="flex flex-col-reverse md:flex-row items-center gap-10 md:gap-14">
+
+        <!-- Info text -->
+        <div class="flex-1 text-center md:text-left space-y-5" data-aos="fade-right" data-aos-duration="900">
+
+          <div
+            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-ocean-400/10 border border-ocean-400/30 text-ocean-300 text-xs font-mono">
+            <span class="w-2 h-2 rounded-full bg-ocean-300 animate-ping"></span>
+            <span>Hồ sơ ứng tuyển AI / Data / IoT</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
+            Nguyễn Hà Phong
+          </h1>
+
+          <p
+            class="text-base sm:text-lg text-ocean-300 font-semibold flex items-center justify-center md:justify-start gap-2">
+            <i data-lucide="graduation-cap" class="w-5 h-5 text-ocean-300"></i>
+            Kỹ thuật Điện tử Viễn thông • ĐH Giao thông Vận tải
+          </p>
+
+          <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+            Sinh viên năm cuối ngành Kỹ thuật điện tử viễn thông, có nền tảng cơ bản về <strong
+              class="text-ocean-200 font-semibold">Docker</strong>, <strong class="text-ocean-200 font-semibold">Machine
+              Learning</strong> và <strong class="text-ocean-200 font-semibold">AI Agent</strong>. Quan tâm và mong muốn
+            học hỏi thêm về mảng AI/Data, IoT, hệ thống và tự động hóa.
+          </p>
+
+          <!-- Contact Quick Info -->
+          <div
+            class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 text-xs text-slate-400 border-t border-ocean-200/10 text-center">
+            <div class="flex min-w-0 items-center justify-center gap-2 group cursor-pointer">
+              <div
+                class="w-7 h-7 rounded-lg bg-ocean-400/10 text-ocean-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+              </div>
+              <a href="tel:0386703171" class="whitespace-nowrap hover:text-ocean-200 font-medium text-slate-200 transition-colors">0386
+                703 171</a>
+            </div>
+
+            <div class="flex min-w-0 items-center justify-center gap-2 group cursor-pointer">
+              <div
+                class="w-7 h-7 rounded-lg bg-ocean-400/10 text-ocean-300 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                <i data-lucide="mail" class="w-3.5 h-3.5"></i>
+              </div>
+              <a href="mailto:Chessman.contact@gmail.com"
+                class="whitespace-nowrap text-[10px] sm:text-[11px] lg:text-xs hover:text-ocean-200 font-medium text-slate-200 transition-colors"
+                title="Chessman.contact@gmail.com">Chessman.contact@gmail.com</a>
+            </div>
+
+            <div class="flex min-w-0 items-center justify-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-ocean-400/10 text-ocean-300 flex items-center justify-center shrink-0">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+              </div>
+              <span class="whitespace-nowrap font-medium text-slate-200">Hà Đông, Hà Nội</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-3.5 pt-2">
+            <a href="#contact"
+              class="liquid-cta px-5 py-2.5 rounded-xl bg-ocean-400 hover:bg-ocean-300 text-slate-950 font-bold text-sm transition-all shadow-lg shadow-ocean-400/25 hover:shadow-ocean-400/40 hover:-translate-y-1 flex items-center gap-2">
+              <i data-lucide="send" class="w-4 h-4"></i>
+              Liên hệ công việc
+            </a>
+</div>
+
+        </div>
+
+        <!-- Avatar Image with White Shirt & Clear Face -->
+        <div class="shrink-0" data-aos="fade-left" data-aos-duration="900">
+          <div class="relative group">
+            <div
+              class="absolute -inset-1.5 bg-gradient-to-r from-ocean-400 via-ocean-300 to-sky-400 rounded-3xl blur-xl opacity-40 group-hover:opacity-75 transition duration-500 animate-pulse">
+            </div>
+            <!-- Khung avatar sắc nét, chuẩn tỉ lệ chân dung -->
+            <div
+              class="relative w-52 h-64 sm:w-64 sm:h-80 rounded-3xl overflow-hidden glass-card p-2 border border-ocean-300/40 shadow-2xl animate-float">
+              <div class="w-full h-full rounded-2xl overflow-hidden bg-[#fafaf8] flex items-center justify-center">
+                <img src="assets/avatar.png" alt="Nguyễn Hà Phong"
+                  class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+              </div>
+              <div
+                class="absolute bottom-4 left-4 right-4 glass-card px-3 py-1.5 rounded-xl border border-ocean-400/30 flex items-center justify-between backdrop-blur-md">
+                <div>
+                  <p class="text-xs font-bold text-white leading-none">Nguyễn Hà Phong</p>
+                  <p class="text-[10px] text-ocean-300 font-mono mt-0.5">UTC (2022 - 2027)</p>
+                </div>
+                <span class="w-2.5 h-2.5 rounded-full bg-ocean-300 shadow-sm shadow-ocean-300"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="space-y-4" data-aos="fade-up" data-aos-duration="800">
+      <div class="border-b border-ocean-200/15 pb-2.5 flex items-center justify-between">
+        <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="user-check" class="w-5 h-5 text-ocean-300"></i>
+          Hồ Sơ Ứng Tuyển
+        </h2>
+        <span class="text-xs font-mono text-ocean-300/80">GIỚI THIỆU CHUNG</span>
+      </div>
+
+      <div class="glass-card p-6 rounded-2xl text-sm sm:text-base text-slate-300 leading-relaxed space-y-4">
+        <p>
+          Tôi là sinh viên ngành <strong>Kỹ thuật Điện tử Viễn thông</strong> tại Trường Đại học Giao thông Vận tải
+          (niên khóa 2022 - 2027). Trong quá trình học tập, tôi chủ động tìm hiểu và xây dựng nền tảng cơ bản về:
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-1">
+          <div
+            class="p-4 rounded-xl bg-slate-900/60 border border-ocean-200/10 flex items-start gap-3 hover:border-ocean-300/30 transition-all duration-300 group"
+            data-aos="fade-up" data-aos-delay="100">
+            <div
+              class="w-8 h-8 rounded-lg bg-ocean-400/15 text-ocean-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+              <i data-lucide="box" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <strong class="text-slate-100 block text-sm font-semibold">Docker</strong>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">Sử dụng container để tạo môi trường thử nghiệm độc
+                lập, tiện lợi khi chạy code.</p>
+            </div>
+          </div>
+
+          <div
+            class="p-4 rounded-xl bg-slate-900/60 border border-ocean-200/10 flex items-start gap-3 hover:border-ocean-300/30 transition-all duration-300 group"
+            data-aos="fade-up" data-aos-delay="150">
+            <div
+              class="w-8 h-8 rounded-lg bg-ocean-400/15 text-ocean-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+              <i data-lucide="trending-up" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <strong class="text-slate-100 block text-sm font-semibold">Machine Learning</strong>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">Nắm được quy trình cơ bản gồm thu thập/chuẩn bị dữ
+                liệu, huấn luyện (train) và đánh giá mô hình.</p>
+            </div>
+          </div>
+
+          <div
+            class="p-4 rounded-xl bg-slate-900/60 border border-ocean-200/10 flex items-start gap-3 hover:border-ocean-300/30 transition-all duration-300 group"
+            data-aos="fade-up" data-aos-delay="200">
+            <div
+              class="w-8 h-8 rounded-lg bg-ocean-400/15 text-ocean-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+              <i data-lucide="bot" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <strong class="text-slate-100 block text-sm font-semibold">AI Agent</strong>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">Ứng dụng AI để hỗ trợ viết code, kiểm thử và hỗ trợ
+                tự động hóa các công việc thường ngày.</p>
+            </div>
+          </div>
+
+          <div
+            class="p-4 rounded-xl bg-slate-900/60 border border-ocean-200/10 flex items-start gap-3 hover:border-ocean-300/30 transition-all duration-300 group"
+            data-aos="fade-up" data-aos-delay="250">
+            <div
+              class="w-8 h-8 rounded-lg bg-ocean-400/15 text-ocean-300 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+              <i data-lucide="cpu" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <strong class="text-slate-100 block text-sm font-semibold">Điện tử & Viễn thông</strong>
+              <p class="text-xs text-slate-400 mt-1 leading-relaxed">Sử dụng cơ bản các phần mềm thiết kế mạch Altium
+                Designer, mô phỏng Proteus và lập trình vi điều khiển PIC C.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Strengths -->
+    <section class="space-y-4" data-aos="fade-up" data-aos-duration="800">
+      <div class="border-b border-ocean-200/15 pb-2.5 flex items-center justify-between">
+        <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="sparkles" class="w-5 h-5 text-ocean-300"></i>
+          Điểm Mạnh Cá Nhân
+        </h2>
+        <span class="text-xs font-mono text-ocean-300/80">PHƯƠNG CHÂM LÀM VIỆC</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 text-center">
+        <div class="glass-card p-4 rounded-xl group hover:border-ocean-300/50" data-aos="zoom-in" data-aos-delay="50">
+          <div
+            class="w-10 h-10 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+          </div>
+          <span class="text-sm font-semibold text-slate-200 block">Tự học nhanh</span>
+          <span class="text-[11px] text-slate-400 mt-0.5 block">Tiếp thu nhanh cái mới</span>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl group hover:border-ocean-300/50" data-aos="zoom-in" data-aos-delay="100">
+          <div
+            class="w-10 h-10 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+            <i data-lucide="git-branch" class="w-5 h-5"></i>
+          </div>
+          <span class="text-sm font-semibold text-slate-200 block">Tư duy theo luồng</span>
+          <span class="text-[11px] text-slate-400 mt-0.5 block">Xâu chuỗi dữ liệu rõ ràng</span>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl group hover:border-ocean-300/50" data-aos="zoom-in" data-aos-delay="150">
+          <div
+            class="w-10 h-10 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+            <i data-lucide="flask-conical" class="w-5 h-5"></i>
+          </div>
+          <span class="text-sm font-semibold text-slate-200 block">Chủ động thử nghiệm</span>
+          <span class="text-[11px] text-slate-400 mt-0.5 block">Bắt tay làm thực tế</span>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl group hover:border-ocean-300/50" data-aos="zoom-in" data-aos-delay="200">
+          <div
+            class="w-10 h-10 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+            <i data-lucide="users" class="w-5 h-5"></i>
+          </div>
+          <span class="text-sm font-semibold text-slate-200 block">Làm việc nhóm</span>
+          <span class="text-[11px] text-slate-400 mt-0.5 block">Phối hợp & Trưởng nhóm</span>
+        </div>
+
+        <div class="glass-card p-4 rounded-xl group hover:border-ocean-300/50 col-span-2 sm:col-span-1"
+          data-aos="zoom-in" data-aos-delay="250">
+          <div
+            class="w-10 h-10 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+            <i data-lucide="clock" class="w-5 h-5"></i>
+          </div>
+          <span class="text-sm font-semibold text-slate-200 block">Trách nhiệm tiến độ</span>
+          <span class="text-[11px] text-slate-400 mt-0.5 block">Đúng hạn & tận tâm</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills & Capabilities -->
+    <section id="skills" class="space-y-4" data-aos="fade-up" data-aos-duration="800">
+      <div class="border-b border-ocean-200/15 pb-2.5 flex items-center justify-between">
+        <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="layers" class="w-5 h-5 text-ocean-300"></i>
+          Kỹ Năng & Năng Lực Cơ Bản
+        </h2>
+        <span class="text-xs font-mono text-ocean-300/80">KỸ NĂNG NỀN TẢNG</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+        <!-- Skill 1: Docker -->
+        <div class="glass-card p-5 rounded-2xl space-y-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center shrink-0">
+              <i data-lucide="box" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-100 text-base">Docker (Cơ bản)</h3>
+              <span class="text-xs text-ocean-300 font-mono">Container & Môi trường</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Biết cách dựng container, tạo môi trường thử nghiệm chạy code độc lập và gọn gàng, tránh lỗi xung đột thư
+            viện giữa các máy.
+          </p>
+          <div class="pt-1 flex flex-wrap gap-1.5">
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> Container cơ bản</span>
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> Môi trường thử
+              nghiệm</span>
+          </div>
+        </div>
+
+        <!-- Skill 2: Machine Learning -->
+        <div class="glass-card p-5 rounded-2xl space-y-3" data-aos="fade-up" data-aos-delay="150">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center shrink-0">
+              <i data-lucide="line-chart" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-100 text-base">Machine Learning (Cơ bản)</h3>
+              <span class="text-xs text-ocean-300 font-mono">Xử lý dữ liệu & Train</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Nắm quy trình làm việc với dữ liệu cơ bản: đọc và làm sạch dữ liệu, đưa vào train mô hình và xem các chỉ số
+            đánh giá kết quả.
+          </p>
+          <div class="pt-1 flex flex-wrap gap-1.5">
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> Đọc & làm sạch dữ
+              liệu</span>
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> Train mô hình</span>
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> Đánh giá kết quả</span>
+          </div>
+        </div>
+
+        <!-- Skill 3: AI Agent -->
+        <div class="glass-card p-5 rounded-2xl space-y-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center shrink-0">
+              <i data-lucide="bot" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-100 text-base">AI Agent & Tự động hóa</h3>
+              <span class="text-xs text-ocean-300 font-mono">Hỗ trợ workflow</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Biết dùng AI hỗ trợ viết code, kiểm thử, phân chia công việc cho AI theo từng vai trò cụ thể, kiểm tra đầu
+            ra và áp dụng vào tự động hóa công việc.
+          </p>
+          <div class="pt-1 flex flex-wrap gap-1.5">
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> Hỗ trợ code & test</span>
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> Giao việc theo vai
+              trò</span>
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> Tự động hóa
+              workflow</span>
+          </div>
+        </div>
+
+        <!-- Skill 4: Hardware & Viễn thông -->
+        <div class="glass-card p-5 rounded-2xl space-y-3" data-aos="fade-up" data-aos-delay="250">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center shrink-0">
+              <i data-lucide="circuit-board" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="font-bold text-slate-100 text-base">Phần Cứng & Vi Điện Tử</h3>
+              <span class="text-xs text-ocean-300 font-mono">Thiết kế & Mô phỏng mạch</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Có kiến thức cơ bản về thiết kế mạch in trên Altium Designer, mô phỏng mạch bằng Proteus và viết code vi
+            điều khiển với PIC C.
+          </p>
+          <div class="pt-1 flex flex-wrap gap-1.5">
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> Altium Designer cơ
+              bản</span>
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> Proteus</span>
+            <span class="tech-pill"><i data-lucide="check" class="w-3 h-3 text-ocean-300"></i> PIC C</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Projects & Achievements -->
+    <section id="projects" class="space-y-4" data-aos="fade-up" data-aos-duration="800">
+      <div class="border-b border-ocean-200/15 pb-2.5 flex items-center justify-between">
+        <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="award" class="w-5 h-5 text-ocean-300"></i>
+          Thành Tích & Dự Án Chi Tiết
+        </h2>
+        <span class="text-xs font-mono text-ocean-200">DỰ ÁN TIÊU BIỂU</span>
+      </div>
+
+      <!-- Project 1: Fall Detection IoT -->
+      <div class="glass-card glow-border p-6 sm:p-8 rounded-2xl space-y-4 relative overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-ocean-400/20 text-ocean-200 border border-ocean-400/40">
+            <i data-lucide="medal" class="w-4 h-4 text-ocean-300"></i>
+            Giải Ba NCKH Cấp Trường - Mảng IoT (UTC)
+          </div>
+          <span class="text-xs font-mono text-slate-400">File mã nguồn: <code>fall_detection_wokwi.ino</code></span>
+        </div>
+
+        <div>
+          <h3 class="text-xl sm:text-2xl font-bold text-white mb-2">
+            Đề tài: Thắt lưng thông minh hỗ trợ người cao tuổi, người khiếm thị
+          </h3>
+          <p class="text-sm text-slate-300 leading-relaxed">
+            Hệ thống thiết bị đeo ứng dụng vi điều khiển ESP32, module cảm biến quán tính IMU (MPU6050) và cảm biến
+            khoảng cách siêu âm (HC-SR04) để bảo vệ người cao tuổi và người khiếm thị.
+          </p>
+        </div>
+
+        <div class="pt-2 mb-2">
+          <a href="assets/Bao_cao_NCKH_IoT.pdf" download="Bao_cao_NCKH_IoT.pdf"
+            class="liquid-cta inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-ocean-400 hover:bg-ocean-300 text-slate-950 font-semibold text-sm transition-all">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            Tải PDF về
+          </a>
+        </div>
+
+        <div class="pt-2 flex flex-wrap gap-2">
+          <span class="tech-pill font-mono text-xs">ESP32 / C++</span>
+          <span class="tech-pill font-mono text-xs">MPU6050 Accelerometer</span>
+          <span class="tech-pill font-mono text-xs">HC-SR04 Ultrasonic</span>
+          <span class="tech-pill font-mono text-xs">Wokwi Simulator</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="space-y-4 pt-4" data-aos="fade-up" data-aos-duration="800">
+      <div class="border-b border-ocean-200/15 pb-2.5 flex items-center justify-between">
+        <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="briefcase" class="w-5 h-5 text-ocean-300"></i>
+          Kinh Nghiệm Làm Việc
+        </h2>
+        <span class="text-xs font-mono text-ocean-300/80">THỰC TẾ</span>
+      </div>
+
+      <div class="glass-card p-6 sm:p-7 rounded-2xl space-y-4 border border-ocean-300/20" data-aos="fade-up"
+        data-aos-delay="100">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-ocean-200/10 pb-3">
+          <div>
+            <h3 class="font-bold text-white text-base sm:text-lg">Nhân viên kinh doanh / Chăm sóc khách hàng</h3>
+            <p class="text-sm text-ocean-300 font-medium flex items-center gap-1.5 mt-0.5">
+              <i data-lucide="building-2" class="w-4 h-4"></i>
+              Truyền Hình Cáp Việt Nam - VTVcab
+            </p>
+          </div>
+          <span
+            class="text-xs text-ocean-200 font-mono px-3 py-1 rounded-full bg-ocean-400/10 border border-ocean-400/20 w-fit">
+            06/2024 - 09/2024
+          </span>
+        </div>
+
+        <ul class="text-sm text-slate-300 space-y-2.5 list-none pl-1">
+          <li class="flex items-start gap-2.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-ocean-300 shrink-0 mt-0.5"></i>
+            <span>Tư vấn các gói cước viễn thông, hỗ trợ giải đáp thắc mắc khách hàng và hướng dẫn sử dụng dịch vụ hiệu
+              quả.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-ocean-300 shrink-0 mt-0.5"></i>
+            <span>Rèn luyện và tích lũy kỹ năng giao tiếp trực tiếp, tư duy giải quyết vấn đề linh hoạt và tinh thần
+              phối hợp công việc nhịp nhàng.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="space-y-4 pt-4" data-aos="fade-up" data-aos-duration="800">
+      <div class="border-b border-ocean-200/15 pb-2.5 flex items-center justify-between">
+        <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="graduation-cap" class="w-5 h-5 text-ocean-300"></i>
+          Quá Trình Học Vấn
+        </h2>
+        <span class="text-xs font-mono text-ocean-300/80">ĐÀO TẠO</span>
+      </div>
+
+      <div class="glass-card p-6 sm:p-7 rounded-2xl space-y-4 border border-ocean-300/20" data-aos="fade-up"
+        data-aos-delay="100">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-ocean-200/10 pb-3">
+          <div>
+            <h3 class="font-bold text-white text-base sm:text-lg">Kỹ thuật Điện tử Viễn thông</h3>
+            <p class="text-sm text-ocean-300 font-medium flex items-center gap-1.5 mt-0.5">
+              <i data-lucide="landmark" class="w-4 h-4"></i>
+              Trường Đại học Giao thông Vận tải (UTC)
+            </p>
+          </div>
+          <span
+            class="text-xs text-ocean-200 font-mono px-3 py-1 rounded-full bg-ocean-400/10 border border-ocean-400/20 w-fit">
+            2022 - 2027
+          </span>
+        </div>
+
+        <ul class="text-sm text-slate-300 space-y-2.5 list-none pl-1">
+          <li class="flex items-start gap-2.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-ocean-300 shrink-0 mt-0.5"></i>
+            <span>Sinh viên chính quy ngành Kỹ thuật Điện tử Viễn thông, tiếp thu kiến thức mạng máy tính, xử lý tín
+              hiệu, hệ thống nhúng và IoT.</span>
+          </li>
+          <li class="flex items-start gap-2.5">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-ocean-300 shrink-0 mt-0.5"></i>
+            <span>Thường xuyên đảm nhiệm vai trò <strong>trưởng nhóm (team leader)</strong> trong các dự án môn học,
+              phân chia công việc và đôn đốc tiến độ.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Interactive Contact Form -->
+    <section id="contact" class="space-y-4 pt-4" data-aos="fade-up" data-aos-duration="800">
+      <div class="border-b border-ocean-200/15 pb-2.5 text-center md:text-left flex items-center justify-between">
+        <h2 class="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="mail" class="w-5 h-5 text-ocean-300"></i>
+          Liên Hệ
+        </h2>
+        <span class="text-xs font-mono text-ocean-300">KẾT NỐI VỚI MÌNH</span>
+      </div>
+
+      <div class="glass-card p-6 sm:p-8 rounded-2xl space-y-6">
+
+        <!-- Info Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <a href="tel:0386703171"
+            class="p-4 rounded-xl bg-slate-900/60 border border-ocean-200/10 hover:border-ocean-300/50 transition-all hover:-translate-y-1 group">
+            <div
+              class="w-10 h-10 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+              <i data-lucide="phone" class="w-5 h-5"></i>
+            </div>
+            <span class="text-xs text-slate-400 block font-mono">ĐIỆN THOẠI</span>
+            <span class="text-sm font-bold text-slate-200 group-hover:text-ocean-300 transition-colors">0386 703
+              171</span>
+          </a>
+
+          <a href="mailto:Chesman.contact@gmail.com"
+            class="p-4 rounded-xl bg-slate-900/60 border border-ocean-200/10 hover:border-ocean-300/50 transition-all hover:-translate-y-1 group">
+            <div
+              class="w-10 h-10 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+              <i data-lucide="mail" class="w-5 h-5"></i>
+            </div>
+            <span class="text-xs text-slate-400 block font-mono">GMAIL</span>
+            <span
+              class="text-sm font-bold text-slate-200 group-hover:text-ocean-300 transition-colors break-all">Chesman.contact@gmail.com</span>
+          </a>
+
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-ocean-200/10">
+            <div
+              class="w-10 h-10 rounded-xl bg-ocean-400/10 text-ocean-300 flex items-center justify-center mx-auto mb-2">
+              <i data-lucide="map-pin" class="w-5 h-5"></i>
+            </div>
+            <span class="text-xs text-slate-400 block font-mono">ĐỊA CHỈ</span>
+            <span class="text-sm font-bold text-slate-200">Hà Đông, Hà Nội</span>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="border-t border-ocean-200/10 pt-6">
+          <h3 class="text-base font-bold text-white mb-4 text-center sm:text-left flex items-center gap-2">
+            <i data-lucide="briefcase" class="w-4 h-4 text-ocean-300"></i>
+            Liên hệ công việc
+          </h3>
+
+          <form id="contact-form" onsubmit="submitContactForm(event)" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-mono text-slate-400 mb-1">Họ và tên *</label>
+                <input type="text" id="contact-name" required placeholder="Ví dụ: Nguyễn Văn A"
+                  class="w-full bg-slate-900/90 border border-ocean-200/20 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-ocean-400">
+              </div>
+              <div>
+                <label class="block text-xs font-mono text-slate-400 mb-1">Email của bạn *</label>
+                <input type="email" id="contact-email" required placeholder="name@company.com"
+                  class="w-full bg-slate-900/90 border border-ocean-200/20 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-ocean-400">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-slate-400 mb-1">Tiêu đề liên hệ</label>
+              <input type="text" id="contact-subject" placeholder="Cơ hội thực tập / Phỏng vấn / Hợp tác"
+                class="w-full bg-slate-900/90 border border-ocean-200/20 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-ocean-400">
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-slate-400 mb-1">Nội dung tin nhắn *</label>
+              <textarea id="contact-message" rows="3" required
+                placeholder="Nhập lời nhắn của bạn gửi tới Nguyễn Hà Phong..."
+                class="w-full bg-slate-900/90 border border-ocean-200/20 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-ocean-400"></textarea>
+            </div>
+
+            <div class="flex items-center justify-between pt-1">
+              <span id="form-status" class="text-xs font-medium"></span>
+              <button type="submit" id="submit-btn"
+                class="liquid-cta px-6 py-2.5 rounded-xl bg-ocean-400 hover:bg-ocean-300 text-slate-950 font-bold text-sm transition-all shadow-md shadow-ocean-400/25 hover:scale-105 flex items-center gap-2">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Gửi Tin Nhắn</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer
+    class="border-t border-ocean-200/15 py-8 text-center text-xs text-slate-400 glass-card !rounded-none !border-x-0 !border-b-0">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        © 2026 <strong>Nguyễn Hà Phong</strong> - ĐH Giao thông Vận tải
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <span>Email: Chesman.contact@gmail.com</span>
+        <span>•</span>
+        <span>Hà Đông, Hà Nội</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Initialize AOS Animation
+    AOS.init({
+      once: false,
+      duration: 800,
+      offset: 60,
+      easing: 'ease-out-cubic'
+    });
+
+    // Lightweight ocean effects; kept separate from portfolio and contact logic.
+    (() => {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const desktopPointer = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 768px)').matches;
+      const header = document.querySelector('header');
+      const navLinks = [...document.querySelectorAll('nav a[href^="#"]')];
+
+      const updateHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 24);
+      updateHeader();
+      window.addEventListener('scroll', updateHeader, { passive: true });
+
+      if ('IntersectionObserver' in window && navLinks.length) {
+        const sections = navLinks.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+        const sectionObserver = new IntersectionObserver(entries => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            navLinks.forEach(link => link.classList.toggle('nav-active', link.getAttribute('href') === `#${entry.target.id}`));
+          }
+        }, { rootMargin: '-34% 0px -56% 0px', threshold: 0 });
+        sections.forEach(section => sectionObserver.observe(section));
+      }
+
+      if (!desktopPointer || reducedMotion) return;
+
+      const glow = document.querySelector('.cursor-glow');
+      const cards = '#about .glass-card, #skills .glass-card, #projects .glass-card, #experience .glass-card, #education .glass-card, #contact .glass-card';
+      let pendingFrame = false;
+      let pointerEvent = null;
+      let activeCard = null;
+
+      window.addEventListener('pointermove', event => {
+        if (event.pointerType !== 'mouse') return;
+        pointerEvent = event;
+        if (pendingFrame) return;
+        pendingFrame = true;
+        requestAnimationFrame(() => {
+          pendingFrame = false;
+          const e = pointerEvent;
+          if (!e) return;
+          glow?.style.setProperty('--cursor-x', `${e.clientX}px`);
+          glow?.style.setProperty('--cursor-y', `${e.clientY}px`);
+
+          const hero = document.querySelector('#hero');
+          if (hero) {
+            const rect = hero.getBoundingClientRect();
+            hero.style.setProperty('--hero-light-x', `${Math.max(0, Math.min(100, (e.clientX - rect.left) / rect.width * 100))}%`);
+            hero.style.setProperty('--hero-light-y', `${Math.max(0, Math.min(100, (e.clientY - rect.top) / rect.height * 100))}%`);
+          }
+
+          const card = e.target instanceof Element ? e.target.closest(cards) : null;
+          if (activeCard && activeCard !== card) {
+            activeCard.style.removeProperty('--tilt-x');
+            activeCard.style.removeProperty('--tilt-y');
+            activeCard.style.removeProperty('--glass-x');
+            activeCard.style.removeProperty('--glass-y');
+          }
+          activeCard = card;
+          if (card) {
+            const rect = card.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            const tiltAmount = window.innerWidth <= 1024 ? 0.9 : 2.2;
+            card.style.setProperty('--tilt-x', `${(0.5 - y) * tiltAmount}deg`);
+            card.style.setProperty('--tilt-y', `${(x - 0.5) * tiltAmount}deg`);
+            card.style.setProperty('--glass-x', `${x * 100}%`);
+            card.style.setProperty('--glass-y', `${y * 100}%`);
+          }
+
+
+        });
+      }, { passive: true });
+
+      document.addEventListener('pointerdown', event => {
+        const target = event.target instanceof Element ? event.target.closest('a[href="#contact"], a[href^="assets/"], #submit-btn') : null;
+        if (!target) return;
+        const rect = target.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'water-ripple';
+        ripple.style.setProperty('--ripple-x', `${event.clientX - rect.left}px`);
+        ripple.style.setProperty('--ripple-y', `${event.clientY - rect.top}px`);
+        target.classList.add('water-ripple-host');
+        target.append(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove(), { once: true });
+      }, { passive: true });
+    })();
+
+    // Scroll progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('scroll-progress').style.width = scrolled + '%';
+    });
+
+    async function submitContactForm(e) {
+      e.preventDefault();
+      const name = document.getElementById('contact-name').value;
+      const email = document.getElementById('contact-email').value;
+      const subject = document.getElementById('contact-subject').value;
+      const message = document.getElementById('contact-message').value;
+      const statusEl = document.getElementById('form-status');
+      const submitBtn = document.getElementById('submit-btn');
+
+      statusEl.className = "text-xs font-mono text-ocean-300 animate-pulse";
+      statusEl.innerText = "Đang gửi dữ liệu đến server...";
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, subject, message })
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          statusEl.className = "text-xs font-semibold text-emerald-400";
+          statusEl.innerText = "✓ Gửi thành công! Đã lưu tin nhắn vào hệ thống.";
+          document.getElementById('contact-form').reset();
+        } else {
+          statusEl.className = "text-xs font-semibold text-rose-400";
+          statusEl.innerText = "✗ Lỗi: " + (data.error || "Không gửi được tin nhắn");
+        }
+      } catch (err) {
+        statusEl.className = "text-xs font-semibold text-rose-400";
+        statusEl.innerText = "✗ Không thể kết nối Backend Server: " + err.message;
+      } finally {
+        submitBtn.disabled = false;
+        setTimeout(() => {
+          if (statusEl.innerText.includes("Gửi thành công")) {
+            statusEl.innerText = "";
+          }
+        }, 5000);
+      }
+    }
+  </script>
+</body>
+
+</html>
