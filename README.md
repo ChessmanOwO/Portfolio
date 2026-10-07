@@ -13,4 +13,4 @@ py server.py
 
 Mở `http://localhost:8085`. Dữ liệu form được lưu cục bộ trong `portfolio.db`.
 
-GitHub Pages chỉ phục vụ nội dung tĩnh, không chạy `server.py`; vì vậy form liên hệ cần được nối với một backend được host riêng nếu triển khai bằng Pages.
+GitHub Pages chỉ phục vụ nội dung tĩnh, không chạy `server.py`.
